@@ -2,13 +2,18 @@
 package Formulaires;
 
 import Tables.DataFileTableModel;
+import interBD.AjoutBD;
+import interBD.ModificationBD;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import metier.AppelJavadoc;
+import metier.NumberCellRenderer;
+import metier.TableTousModel;
 
 /**
  * Ouvre la fenêtre de gestion des clients. Ajout, Modification, Suppression et consultation de la liste des clients existants.
@@ -89,8 +94,7 @@ public class AddClient extends javax.swing.JDialog {
         chpEmail = new javax.swing.JTextField();
         lbEmail = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        DataFileTableModel model;
-        String nomFichier="Data/Clients.txt";
+        DefaultTableModel model = new DefaultTableModel();
         TableClients = new javax.swing.JTable();
         lbCommandes = new javax.swing.JLabel();
         bSupprimer = new javax.swing.JButton();
@@ -358,19 +362,18 @@ public class AddClient extends javax.swing.JDialog {
         jPanel1.add(fondcouleur2);
         fondcouleur2.setBounds(50, 200, 600, 70);
 
-        model = new DataFileTableModel(nomFichier);
+        TableClients.setDefaultRenderer(Object.class, new NumberCellRenderer());
+        TableTousModel.TableCliModel(model);
         TableClients.setModel(model);
-        TableClients.createDefaultColumnsFromModel();
-
         // Retirer les colonnes qu'on ne veut pas afficher dans le tableau
         // Le numéro des colonnes se décale à chaque retrait, d'où les nombreux retraits de la colonne 7
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(3));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(5));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
+        TableClients.removeColumn(TableClients.getColumnModel().getColumn(2));
+        TableClients.removeColumn(TableClients.getColumnModel().getColumn(4));
+        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
         TableClients.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TableClientsMouseClicked(evt);
@@ -414,6 +417,11 @@ public class AddClient extends javax.swing.JDialog {
         bAjouter.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bAjouterMouseClicked(evt);
+            }
+        });
+        bAjouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAjouterActionPerformed(evt);
             }
         });
         jPanel1.add(bAjouter);
@@ -514,19 +522,21 @@ public class AddClient extends javax.swing.JDialog {
 
     private void TableClientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableClientsMouseClicked
         // Je récupére l'identifiant, colonne 1.
-        lbid.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),1));     
+        String idrepval = String.valueOf(TableClients.getModel().getValueAt(TableClients.getSelectedRow(),0));
+        lbid.setText (idrepval);     
         // Je récupére le nom de l'enseigne, colonne 2.
-        chpNomenseigne.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),2));
+        chpNomenseigne.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),1));
         // Je récupére le numéro de Siret, colonne 3.
-        chpSiret.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),3));
+        String siretval= String.valueOf(TableClients.getModel().getValueAt(TableClients.getSelectedRow(),2));
+        chpSiret.setText (siretval);
        // Je récupére la date de la dernière visite, colonne 4.
-         chpDatevisite.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),4));
+         chpDatevisite.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),3));
          // Je récupére l'adresse, colonne 5.
-        chpAdresse1.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),5));
+        chpAdresse1.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),4));
         // Je récupére le complément d'adresse, colonne 6.
-        chpAdresse2.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),6));
+        chpAdresse2.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),5));
         // Je récupére le code postal, colonne 7.
-        chpCodepostal.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),7));
+        chpCodepostal.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),6));
         // Je récupére la ville, colonne 8.
         chpVille.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),8));
         // Je récupére le pays, colonne 9.
@@ -548,69 +558,7 @@ public class AddClient extends javax.swing.JDialog {
     }//GEN-LAST:event_TableClientsMouseClicked
 
     private void bAjouterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bAjouterMouseClicked
-       // Je recupere le nombre de ligne (soit le nombre de clients.
-        int nbdeligne = TableClients.getRowCount() ;
-        //Je récupére les caractéristique du nouveau client.
-        
-        String clnomenseigne = chpNomenseigne.getText() ;
-        String clsiret = chpSiret.getText() ;
-        String clvisite = chpDatevisite.getText() ;
-        String cladresse1 = chpAdresse1.getText() ;
-        String cladresse2 = chpAdresse2.getText() ;
-        String clcodepostal = chpCodepostal.getText() ;
-        String clville = chpVille.getText() ;
-        String clpays = (String) comboPays.getSelectedItem() ;
-        String clnom = chpNom.getText() ;
-        String clprenom = chpPrenom.getText() ;
-        String cltelfixe = chpTelfixe.getText() ;
-        String cltelportable = chpTelportable.getText() ;
-        String clemail = chpEmail.getText() ;
-        String clcommandes = "0" ;
-        String clActif = "Oui" ;
-        String chaine = (clActif + ";" + (nbdeligne+1) + ";" + clnomenseigne + ";" + clsiret + ";" + clvisite + ";" + cladresse1  + ";" + cladresse2
-                + ";" + clcodepostal  + ";" + clville  + ";" + clpays  + ";" + clnom  + ";" + clprenom  + ";" + cltelfixe
-                + ";" + cltelportable  + ";" + clemail  +   ";" + clcommandes + "\n");
-   //     try {
-//            EcritureFichier ("Data/Clients.txt", chaine) ;
-            
-            // pop up de confirmation d'ajout
-            JOptionPane.showMessageDialog(null, "Le client a bien été ajouté", "Ajout de client", JOptionPane.INFORMATION_MESSAGE);
-            
-            // Actualisation de la table après ajout du nouveau client
-            DataFileTableModel model1;
-            String nomFichier1="Data/Clients.txt";
-            model1 = new DataFileTableModel(nomFichier1);
-            model1.fireTableDataChanged();
-            TableClients.setModel(model1);
-            TableClients.removeColumn(TableClients.getColumnModel().getColumn(3));
-TableClients.removeColumn(TableClients.getColumnModel().getColumn(5));
-TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
-            
-             // Effacer les données du formulaire
-        chpNomenseigne.setText ("") ;
-        chpSiret.setText ("") ;
-        chpDatevisite.setText ("") ;
-        chpAdresse1.setText ("") ;
-        chpAdresse2.setText ("") ;
-        chpCodepostal.setText ("") ;
-        chpVille.setText ("") ;
-        
-        chpNom.setText ("") ;
-        chpPrenom.setText ("") ;
-        chpEmail.setText ("") ;
-        chpTelfixe.setText ("") ;
-        chpTelportable.setText ("") ;
-       lbCommandes1.setText ("") ;
-       lbid.setText ("") ;
-       //     } catch (IOException ex) {
-       //     Logger.getLogger(AddRep.class.getName()).log(Level.SEVERE, null, ex);
-            
-           
-     //       }
+
     }//GEN-LAST:event_bAjouterMouseClicked
 
     private void chpEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_chpEmailFocusLost
@@ -622,14 +570,10 @@ TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
     }//GEN-LAST:event_chpEmailFocusLost
 
     private void bModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bModifierMouseClicked
-         // Je recupere la ligne à modifier
-       //int ligneactuelle = TableClients.getSelectedRow() + 1 ;
-        String clActif = "Oui" ;
-        String clid = lbid.getText() ;
-        int clid1 = Integer.parseInt(clid);
-        String clnomenseigne = chpNomenseigne.getText() ;
+     
+         String clnomenseigne = chpNomenseigne.getText() ;
         String clsiret = chpSiret.getText() ;
-        String clvisite = chpDatevisite.getText() ;
+        String cldateder=chpDatevisite.getText();
         String cladresse1 = chpAdresse1.getText() ;
         String cladresse2 = chpAdresse2.getText() ;
         String clcodepostal = chpCodepostal.getText() ;
@@ -638,13 +582,17 @@ TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
         String clnom = chpNom.getText() ;
         String clprenom = chpPrenom.getText() ;
         String cltelfixe = chpTelfixe.getText() ;
-        String cltelportable = chpTelportable.getText() ;
+        int cltelfixe1 = Integer.parseInt(cltelfixe);
+        String cltelport = chpTelportable.getText() ;
+         int cltelport1 = Integer.parseInt(cltelport);
         String clemail = chpEmail.getText() ;
-        String clcommandes = lbCommandes1.getText() ;
+        String clcommandes = "0" ;
+        int clcommandes1 = Integer.parseInt(clcommandes);
+        String clActif = "oui" ;
         
-        String chaine = (clActif + ";" + clid + ";" + clnomenseigne + ";" + clsiret + ";" + clvisite + ";" + cladresse1  + ";" + cladresse2
-                + ";" + clcodepostal  + ";" + clville  + ";" + clpays  + ";" + clnom  + ";" + clprenom  + ";" + cltelfixe
-                + ";" + cltelportable  + ";" + clemail  +   ";" + clcommandes + "\n");
+        ModificationBD.modCli(clActif,clnomenseigne, clsiret, cldateder, cladresse1, cladresse2, 
+            clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1, 
+           clemail, clcommandes);
         
         // Ecraser la ligne du client avec la position active.
               
@@ -762,6 +710,66 @@ TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));
             Logger.getLogger(FenetrePrincipaleFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_mjavadocActionPerformed
+
+    private void bAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouterActionPerformed
+   
+        String clnomenseigne = chpNomenseigne.getText() ;
+        String clsiret = chpSiret.getText() ;
+        String cldateder=chpDatevisite.getText();
+        String cladresse1 = chpAdresse1.getText() ;
+        String cladresse2 = chpAdresse2.getText() ;
+        String clcodepostal = chpCodepostal.getText() ;
+        String clville = chpVille.getText() ;
+        String clpays = (String) comboPays.getSelectedItem() ;
+        String clnom = chpNom.getText() ;
+        String clprenom = chpPrenom.getText() ;
+        String cltelfixe = chpTelfixe.getText() ;
+        int cltelfixe1 = Integer.parseInt(cltelfixe);
+        String cltelport = chpTelportable.getText() ;
+         int cltelport1 = Integer.parseInt(cltelport);
+        String clemail = chpEmail.getText() ;
+        String clcommandes = "0" ;
+        int clcommandes1 = Integer.parseInt(clcommandes);
+        String clActif = "oui" ;
+        
+             AjoutBD.addCli(clActif,clnomenseigne, clsiret, cldateder, cladresse1, cladresse2, 
+            clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1, 
+           clemail, clcommandes1);
+       
+          // Actualisation de la table
+           DefaultTableModel model = new DefaultTableModel();
+            TableTousModel.TableCliModel(model);
+            TableClients.setModel(model);
+           
+            
+            // Actualisation de la table après ajout du nouveau client
+           
+TableClients.removeColumn(TableClients.getColumnModel().getColumn(2));
+TableClients.removeColumn(TableClients.getColumnModel().getColumn(4));
+TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+            
+             // Effacer les données du formulaire
+        chpNomenseigne.setText ("") ;
+        chpSiret.setText ("") ;
+        chpDatevisite.setText ("") ;
+        chpAdresse1.setText ("") ;
+        chpAdresse2.setText ("") ;
+        chpCodepostal.setText ("") ;
+        chpVille.setText ("") ;
+        
+        chpNom.setText ("") ;
+        chpPrenom.setText ("") ;
+        chpEmail.setText ("") ;
+        chpTelfixe.setText ("") ;
+        chpTelportable.setText ("") ;
+       lbCommandes1.setText ("") ;
+       lbid.setText ("") ;
+       
+    }//GEN-LAST:event_bAjouterActionPerformed
 
     /**
      * Mise en page de la fenêtre de gestion de clients

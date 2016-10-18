@@ -8,13 +8,13 @@ package interBD;
 import java.sql.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import metier.*;
 
 /**
- * Classe des créations de liste des représentants à partir des requêtes 
+ * Récupération des données des tables representants, clients et prospects.
+ * Construction d'ArrayLists, à l'aide des constructeurs et des getteurs
  * @author sociepka
  */
 public class InterrogationBD {  
@@ -29,21 +29,17 @@ public class InterrogationBD {
     ConnectionBD conn = new ConnectionBD("jdbc:mysql://localhost:3306/toutbois", "root", "");
     
         if (conn.connect()) {
-             
                 try {
-                    ResultSet rs = conn.exec("select * from representants");
+                    ResultSet rs = conn.exec("select * from representants where actif='oui'");
                         if (rs != null) {
-                            
                             while (rs.next()) {
-                               
                                 Representant rep = new Representant(
                                 rs.getInt("id_rep"),
                                 rs.getString("actif"),
                                 rs.getString("nomrep"),
                                 rs.getString("prenomrep"),
-                                rs.getFloat("salaire"),
+                                rs.getInt("salaire"),
                                 rs.getFloat("txcommission"));
-                                
                                 r.add(rep);
                             }
                             rs.next();
@@ -53,11 +49,10 @@ public class InterrogationBD {
                     }
              } 
     else {
-            System.out.println("oracle connection failed !!!");
+            System.out.println("mysql connection failed !!!");
         }
              conn.close();
-           return r;
-          
+           return r;    
     }
    
    /**
@@ -70,23 +65,19 @@ public class InterrogationBD {
     ConnectionBD conn = new ConnectionBD("jdbc:mysql://localhost:3306/toutbois", "root", "");
     
         if (conn.connect()) {
-             
                 try {
-                    ResultSet rs = conn.exec("select * from clients");
+                    ResultSet rs = conn.exec("select * from clients where actif='oui'");
                         if (rs != null) {
-                            
                             while (rs.next()) {
-                               
                                 Client cli = new Client(
-                                       
                                 rs.getInt("idcli"),
                                 rs.getString("actif"),
                                 rs.getString("nomens"),
-                                rs.getInt("siret"),
-                                rs.getDate("dateder"),
+                                rs.getString("siret"),
+                                rs.getString("dateder"),
                                 rs.getString("adresse1"),        
                                 rs.getString("adresse2"),
-                                rs.getInt("cp"),
+                                rs.getString("cp"),
                                 rs.getString("ville"),
                                 rs.getString("pays"),
                                 rs.getString("nomcont"),
@@ -95,8 +86,7 @@ public class InterrogationBD {
                                 rs.getInt("telport"),
                                 rs.getString("email"),
                                 rs.getInt("nbcommandes")
-                             );
-                                
+                             ); 
                                 r.add(cli);
                             }
                             rs.next();
@@ -106,11 +96,10 @@ public class InterrogationBD {
                     }
              } 
     else {
-            System.out.println("oracle connection failed !!!");
+            System.out.println("mysql connection failed !!!");
         }
              conn.close();
-           return r;
-          
+           return r;     
     }
       
   /**
@@ -123,15 +112,11 @@ public class InterrogationBD {
     ConnectionBD conn = new ConnectionBD("jdbc:mysql://localhost:3306/toutbois", "root", "");
     
         if (conn.connect()) {
-             
                 try {
-                    ResultSet rs = conn.exec("select * from prospects");
+                    ResultSet rs = conn.exec("select * from prospects where actif='oui'");
                         if (rs != null) {
-                            
                             while (rs.next()) {
-                               
                                 Prospect pro = new Prospect(
-                                       
                                 rs.getInt("idpro"),
                                 rs.getString("actif"),
                                 rs.getString("nomens"),
@@ -148,7 +133,6 @@ public class InterrogationBD {
                                 rs.getInt("telport"),
                                 rs.getString("email")
                              );
-                                
                                 r.add(pro);
                             }
                             rs.next();
@@ -158,14 +142,9 @@ public class InterrogationBD {
                     }
              } 
     else {
-            System.out.println("oracle connection failed !!!");
+            System.out.println("mysql connection failed !!!");
         }
              conn.close();
            return r;
-          
     }  
     }     
-   
-    
-    
-

@@ -5,7 +5,11 @@
  */
 package metier;
 
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 /**
  *
@@ -15,11 +19,11 @@ public class Client {
     int idcli;
     String actif;
     String nomens;
-    int siret;
-    Date dateder;
+    String siret;
+    String dateder;
     String adresse1;
     String adresse2;
-    int cp;
+    String cp;
     String ville;
     String pays;
     String nomcont;
@@ -32,8 +36,8 @@ public class Client {
     public Client() {
     }
 
-    public Client(int idcli, String actif, String nomens, int siret, Date dateder, 
-            String adresse1, String adresse2, int cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
+    public Client(int idcli, String actif, String nomens, String siret, String dateder, 
+            String adresse1, String adresse2, String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
             String email, int nbcommandes) {
         this.idcli = idcli;
         this.actif = actif;
@@ -77,19 +81,20 @@ public class Client {
         this.nomens = nomens;
     }
 
-    public int getSiret() {
+    public String getSiret() {
         return siret;
     }
 
-    public void setSiret(int siret) {
+    public void setSiret(String siret) {
         this.siret = siret;
     }
 
-    public Date getDateder() {
+    public String getDateder() {
+        
         return dateder;
     }
 
-    public void setDateder(Date dateder) {
+    public void setDateder(String dateder) {
         this.dateder = dateder;
     }
 
@@ -109,11 +114,11 @@ public class Client {
         this.adresse2 = adresse2;
     }
 
-    public int getCp() {
+    public String getCp() {
         return cp;
     }
 
-    public void setCp(int cp) {
+    public void setCp(String cp) {
         this.cp = cp;
     }
 

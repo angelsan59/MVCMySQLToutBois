@@ -752,9 +752,9 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TableClientsMouseClicked"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="DataFileTableModel model;&#xa; String nomFichier=&quot;Data/Clients.txt&quot;;"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="TableClients.createDefaultColumnsFromModel();&#xa;&#xa;// Retirer les colonnes qu&apos;on ne veut pas afficher dans le tableau&#xa;// Le num&#xe9;ro des colonnes se d&#xe9;cale &#xe0; chaque retrait, d&apos;o&#xf9; les nombreux retraits de la colonne 7&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(3));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(5));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(8));"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="model = new DataFileTableModel(nomFichier);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="DefaultTableModel model = new DefaultTableModel();"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="// Retirer les colonnes qu&apos;on ne veut pas afficher dans le tableau&#xa;// Le num&#xe9;ro des colonnes se d&#xe9;cale &#xe0; chaque retrait, d&apos;o&#xf9; les nombreux retraits de la colonne 7&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(2));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(4));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));&#xa;TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="TableClients.setDefaultRenderer(Object.class, new NumberCellRenderer());&#xa;TableTousModel.TableCliModel(model);"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -816,6 +816,7 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bAjouterMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bAjouterActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

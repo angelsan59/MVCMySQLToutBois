@@ -5,16 +5,11 @@
  */
 package interBD;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import metier.*;
 
 /**
- * Classe qui ajoute les représentants avec les paramètres choisis par l'utilisateur dans la fenêter de l'application
+ * Classe qui ajoute les représentants, clients et prospects créés dans le formulaire
  * @author sociepka
  */
 public class AjoutBD {
@@ -26,22 +21,17 @@ public class AjoutBD {
      * @param sal salaire
      * @param txc taux de commission
      */
-    public static void addRep(String repnom,String repprenom,int sal,float txc)
+    public static void addRep(String repactif,String repnom,String repprenom,int sal,float txc)
     { 
     ConnectionBD conn = new ConnectionBD("jdbc:mysql://localhost:3306/toutbois", "root", "");
     
         if (conn.connect()) {
-            
            try
            {
-              String query = "INSERT INTO representants (`id_rep`, `actif`, `nomrep`, `prenomrep`, `salaire`, `txcommission`) VALUES (NULL, 'oui', '"+repnom+"', '"+repprenom+"', '"+sal+"', '"+txc+"')";
+              String query = "INSERT INTO representants (`id_rep`, `actif`, `nomrep`, `prenomrep`, `salaire`, `txcommission`) VALUES (NULL, '"+repactif+"', '"+repnom+"', '"+repprenom+"', '"+sal+"', '"+txc+"')";
           int rs1 = conn.exup(query);
             if (rs1 != 0) {
-                
-                JOptionPane.showMessageDialog(null, "Le représentant a bien été ajouté", "Ajout de représentant", JOptionPane.INFORMATION_MESSAGE);
-                
-            }
- 
+                JOptionPane.showMessageDialog(null, "Le représentant a bien été ajouté", "Ajout de représentant", JOptionPane.INFORMATION_MESSAGE); }
             } catch (Exception d) 
                         { 
                             System.out.println ("Probleme de requete"); 
@@ -70,28 +60,23 @@ public class AjoutBD {
   * @param email adresse email
   * @param nbcommandes nombre de commandes passées par le client
   */
-    public static void addCli(String nomens, int siret, Date dateder, String adresse1, String adresse2, 
-            int cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
+    public static void addCli(String clactif,String nomens, String siret, String dateder, String adresse1, String adresse2, 
+            String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
             String email, int nbcommandes)
     { 
     ConnectionBD conn = new ConnectionBD("jdbc:mysql://localhost:3306/toutbois", "root", "");
     
         if (conn.connect()) {
-            
            try
            {
               String query = "INSERT INTO clients (`idcli`, `actif`, `nomens`, `siret`, `dateder`, `adresse1`, "
                       + "`adresse2`, `cp`, `ville`, `pays`, `nomcont`, `prenomcont`, `telfixe`, `telport`, `email`, `nbcommandes`"
-                      + ") VALUES (NULL, 'oui', '"+nomens+"', '"+siret+"', '"+dateder+"', '"+adresse1+"', '"+adresse2+"', '"+cp+"',"
+                      + ") VALUES (NULL, '"+clactif+"', '"+nomens+"', '"+siret+"', STR_TO_DATE('"+dateder+"','%e/%c/%Y'), '"+adresse1+"', '"+adresse2+"', '"+cp+"',"
                       + " '"+ville+"', '"+pays+"', '"+nomcont+"', '"+prenomcont+"', '"+telfixe+"', '"+telport+"', '"+email+"', '"+nbcommandes+"')";
           int rs1 = conn.exup(query);
             if (rs1 != 0) {
-                
-                JOptionPane.showMessageDialog(null, "Le client a bien été ajouté", "Ajout de client", JOptionPane.INFORMATION_MESSAGE);
-                
-            }
- 
-            } catch (Exception d) 
+                JOptionPane.showMessageDialog(null, "Le client a bien été ajouté", "Ajout de client", JOptionPane.INFORMATION_MESSAGE);}
+} catch (Exception d) 
                         { 
                             System.out.println ("Probleme de requete"); 
                         } 
@@ -118,7 +103,7 @@ public class AjoutBD {
   * @param telport numéro de téléphone portable
   * @param email adresse email
   */
-    public static void addPro(String nomens, int siret, Date dateder, String adresse1, String adresse2, 
+    public static void addPro(String practif,String nomens, int siret,  String dateder, String adresse1, String adresse2, 
             int cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
             String email)
     { 
@@ -130,7 +115,7 @@ public class AjoutBD {
            {
               String query = "INSERT INTO prospect (`idcli`, `actif`, `nomens`, `siret`, `dateder`, `adresse1`, "
                       + "`adresse2`, `cp`, `ville`, `pays`, `nomcont`, `prenomcont`, `telfixe`, `telport`, `email`"
-                      + ") VALUES (NULL, 'oui', '"+nomens+"', '"+siret+"', '"+dateder+"', '"+adresse1+"', '"+adresse2+"', '"+cp+"',"
+                      + ") VALUES (NULL, '"+practif+"', '"+nomens+"', '"+siret+"', '"+dateder+"', '"+adresse1+"', '"+adresse2+"', '"+cp+"',"
                       + " '"+ville+"', '"+pays+"', '"+nomcont+"', '"+prenomcont+"', '"+telfixe+"', '"+telport+"', '"+email+"')";
           int rs1 = conn.exup(query);
             if (rs1 != 0) {

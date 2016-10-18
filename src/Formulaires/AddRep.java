@@ -1,30 +1,18 @@
 
 package Formulaires;
 
+import metier.NumberCellRenderer;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import Tables.*;
-import interBD.InterrogationBD;
-import static interBD.InterrogationBD.getRep;
 import interBD.AjoutBD;
 import interBD.ModificationBD;
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import static javax.management.remote.JMXConnectorFactory.connect;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import metier.AppelJavadoc;
 import metier.TableTousModel;
-import mysqltest.MsqlConnection;
-import static javax.management.remote.JMXConnectorFactory.connect;
-import static javax.management.remote.JMXConnectorFactory.connect;
-import static javax.management.remote.JMXConnectorFactory.connect;
 
 
 /**
@@ -219,6 +207,11 @@ private void initialise(){
                 bAjouterMouseClicked(evt);
             }
         });
+        bAjouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAjouterActionPerformed(evt);
+            }
+        });
         jPanel1.add(bAjouter);
         bAjouter.setBounds(570, 100, 120, 27);
 
@@ -230,6 +223,11 @@ private void initialise(){
                 bSupprimerMouseClicked(evt);
             }
         });
+        bSupprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSupprimerActionPerformed(evt);
+            }
+        });
         jPanel1.add(bSupprimer);
         bSupprimer.setBounds(570, 160, 120, 27);
 
@@ -237,6 +235,11 @@ private void initialise(){
         bEffacer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bEffacerMouseClicked(evt);
+            }
+        });
+        bEffacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEffacerActionPerformed(evt);
             }
         });
         jPanel1.add(bEffacer);
@@ -258,12 +261,14 @@ private void initialise(){
         jPanel1.add(bModifier);
         bModifier.setBounds(570, 130, 120, 27);
 
+        lbIdentifiant.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lbIdentifiant.setText("Identifiant");
         jPanel1.add(lbIdentifiant);
-        lbIdentifiant.setBounds(10, 90, 60, 20);
+        lbIdentifiant.setBounds(10, 80, 60, 20);
         jPanel1.add(lbid);
-        lbid.setBounds(80, 90, 40, 20);
+        lbid.setBounds(80, 80, 40, 20);
 
+        tablerep.setDefaultRenderer(Object.class, new NumberCellRenderer());
         TableTousModel.TableRepModel(model);
         tablerep.setModel(model);
         tablerep.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -285,6 +290,11 @@ private void initialise(){
         mRetour.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mRetourMouseClicked(evt);
+            }
+        });
+        mRetour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mRetourActionPerformed(evt);
             }
         });
         jMenuBar1.add(mRetour);
@@ -350,71 +360,26 @@ private void initialise(){
     }//GEN-LAST:event_mRetourMouseClicked
 
     private void bEffacerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bEffacerMouseClicked
-        // Action sur le bouton Effacer, purge des champs de saisies et suppression de la selection dans la table.
-        chpNom.setText ("") ;
-        chpPrenom.setText ("") ;
-        chpSalaire.setText ("") ;
-        chpTxCommission.setText ("") ;
-        lbid.setText ("") ;
-        tablerep.getSelectionModel().clearSelection();
-        
+       
     }//GEN-LAST:event_bEffacerMouseClicked
 
     private void bModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModifierActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bModifierActionPerformed
-
-    private void bSupprimerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSupprimerMouseClicked
-        // Je recupere la ligne à rendre inactive
-        //int ligneactuelle = TableRepresentants.getSelectedRow() + 1 ;
-        String repActif = "Non" ;
-        String repid = lbid.getText() ;
+      String repid = lbid.getText() ;
         int repid1 = Integer.parseInt(repid);
         String repnom = chpNom.getText() ;
         String repprenom = chpPrenom.getText() ;
-        String repSalaire = chpSalaire.getText () ; 
-        String repTxtCommission = chpTxCommission.getText() ;
-        String chaine = (repActif + ";" + repid + ";" + repnom + ";" + repprenom + ";" + repSalaire + ";" + repTxtCommission + "\n");
-        // Ecraser la ligne du représentant avec la position inactif.
-        //try {
-//            ModificationLigne ("Data/Representants.txt", chaine, repid1) ;
-            JOptionPane.showMessageDialog(null, "Le représentant a bien été enlevé de la liste", "Suppression de représentant", JOptionPane.INFORMATION_MESSAGE);
-           
-            // Actualisation de la table
-           
-            DefaultTableModel model2 = new DefaultTableModel();
-            model2.fireTableDataChanged();
-            tablerep.setModel(model2);
-
-            // Effacer les données du formulaire
-            chpNom.setText ("") ;
-            chpPrenom.setText ("") ;
-            chpSalaire.setText ("") ;
-            chpTxCommission.setText ("") ;
-            lbid.setText ("") ;
-        
-    }//GEN-LAST:event_bSupprimerMouseClicked
-
-    private void bModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bModifierMouseClicked
-        // Je recupere la ligne à modifier
-        //int ligneactuelle = TableRepresentants.getSelectedRow() + 1 ;
-        String repid = lbid.getText() ;
-        int repid1 = Integer.parseInt(repid);
-        String repnom = chpNom.getText() ;
-        String repprenom = chpPrenom.getText() ;
-        String sal = chpSalaire.getText () ; 
-        int sal1 = Integer.parseInt(sal);
+        String sal = chpSalaire.getText () ;
+        float sal1 = Float.parseFloat(sal);
         String txc = chpTxCommission.getText() ;
         float txc1 = Float.parseFloat(txc);
-        String repActif = "Oui" ;
+        String repActif = "oui" ;
         
-        ModificationBD.modRep(repid1,repnom,repprenom,sal1,txc1);
+        ModificationBD.modRep(repActif,repid1,repnom,repprenom,sal1,txc1);
         
-           // Actualisation de la table
-           
-            DefaultTableModel model2 = new DefaultTableModel();
-            model2.fireTableDataChanged();
-            tablerep.setModel(model2);
+            // Actualisation de la table
+           DefaultTableModel model = new DefaultTableModel();
+            TableTousModel.TableRepModel(model);
+            tablerep.setModel(model);
 
             // Effacer les données du formulaire
             chpNom.setText ("") ;
@@ -423,31 +388,18 @@ private void initialise(){
             chpTxCommission.setText ("") ;
             lbid.setText ("") ;
           
+    }//GEN-LAST:event_bModifierActionPerformed
+
+    private void bSupprimerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSupprimerMouseClicked
+       
+    }//GEN-LAST:event_bSupprimerMouseClicked
+
+    private void bModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bModifierMouseClicked
+        
     }//GEN-LAST:event_bModifierMouseClicked
 
     private void bAjouterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bAjouterMouseClicked
-   // récupération des données du formulaire
-        String repnom = chpNom.getText() ;
-        String repprenom = chpPrenom.getText() ;
-        String repSalaire = chpSalaire.getText () ; 
-        int repsal = Integer.parseInt(repSalaire);
-        String repTxtCommission = chpTxCommission.getText() ;
-        float txc = Float.parseFloat(repTxtCommission);
-        String repActif = "Oui" ;
-        
-         AjoutBD.addRep(repnom,repprenom,repsal,txc);
-       
-          // Actualisation de la table
-           DefaultTableModel model = new DefaultTableModel();
-            TableTousModel.TableRepModel(model);
-            tablerep.setModel(model);
-  
-   // Effacer les données du formulaire
-            chpNom.setText ("") ;
-            chpPrenom.setText ("") ;
-            chpSalaire.setText ("") ;
-            chpTxCommission.setText ("") ;
-            
+   
     }//GEN-LAST:event_bAjouterMouseClicked
 
     private void maproposdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maproposdeActionPerformed
@@ -464,17 +416,87 @@ private void initialise(){
 
     private void tablerepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablerepMouseClicked
     // Je récupére l'identifiant, colonne 1.
-        lbid.setText ((String) tablerep.getModel().getValueAt(tablerep.getSelectedRow(),1));
+    String idrepval = String.valueOf(tablerep.getModel().getValueAt(tablerep.getSelectedRow(),0));
+        lbid.setText (idrepval);
         // Je récupére le nom, colonne 2.
-        chpNom.setText ((String) tablerep.getModel().getValueAt(tablerep.getSelectedRow(),2));
+        chpNom.setText ((String) tablerep.getModel().getValueAt(tablerep.getSelectedRow(),1));
         // Je récupére le Prenom, colonne 3.
-        chpPrenom.setText ((String) tablerep.getModel().getValueAt(tablerep.getSelectedRow(),3));
+        chpPrenom.setText ((String) tablerep.getModel().getValueAt(tablerep.getSelectedRow(),2));
         // Je récupére le salaire, colonne 4.
-        chpSalaire.setText ((String) tablerep.getModel().getValueAt(tablerep.getSelectedRow(),4));
+        String salval = String.valueOf(tablerep.getModel().getValueAt(tablerep.getSelectedRow(),3));
+        chpSalaire.setText (salval);
         // Je récupére le taux de commission, colonne 5.
-        chpTxCommission.setText ((String) tablerep.getModel().getValueAt(tablerep.getSelectedRow(),5));
+        String txcval = String.valueOf(tablerep.getModel().getValueAt(tablerep.getSelectedRow(),4));
+        chpTxCommission.setText (txcval);
         
     }//GEN-LAST:event_tablerepMouseClicked
+
+    private void mRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mRetourActionPerformed
+        dispose();
+    }//GEN-LAST:event_mRetourActionPerformed
+
+    private void bAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAjouterActionPerformed
+         // récupération des données du formulaire
+        String repnom = chpNom.getText() ;
+        String repprenom = chpPrenom.getText() ;
+        String repSalaire = chpSalaire.getText () ; 
+        int repsal = Integer.parseInt(repSalaire);
+        String repTxtCommission = chpTxCommission.getText() ;
+        float txc = Float.parseFloat(repTxtCommission);
+        String repActif = "oui" ;
+        
+         AjoutBD.addRep(repActif,repnom,repprenom,repsal,txc);
+       
+          // Actualisation de la table
+           DefaultTableModel model = new DefaultTableModel();
+            TableTousModel.TableRepModel(model);
+            tablerep.setModel(model);
+  
+   // Effacer les données du formulaire
+            chpNom.setText ("") ;
+            chpPrenom.setText ("") ;
+            chpSalaire.setText ("") ;
+            chpTxCommission.setText ("") ;
+    }//GEN-LAST:event_bAjouterActionPerformed
+
+    private void bSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSupprimerActionPerformed
+
+        String repActif = "non" ;
+        String repid = lbid.getText() ;
+        int repid1 = Integer.parseInt(repid);
+        String repnom = chpNom.getText() ;
+        String repprenom = chpPrenom.getText() ;
+        String sal = chpSalaire.getText () ;
+        float sal1 = Float.parseFloat(sal);
+        String txc = chpTxCommission.getText() ;
+        float txc1 = Float.parseFloat(txc);
+
+       ModificationBD.modRep(repActif,repid1,repnom,repprenom,sal1,txc1);
+           
+              // Actualisation de la table
+           DefaultTableModel model = new DefaultTableModel();
+            TableTousModel.TableRepModel(model);
+            tablerep.setModel(model);
+
+            // Effacer les données du formulaire
+            chpNom.setText ("") ;
+            chpPrenom.setText ("") ;
+            chpSalaire.setText ("") ;
+            chpTxCommission.setText ("") ;
+            lbid.setText ("") ;
+        
+    }//GEN-LAST:event_bSupprimerActionPerformed
+
+    private void bEffacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEffacerActionPerformed
+         // Action sur le bouton Effacer, purge des champs de saisies et suppression de la selection dans la table.
+        chpNom.setText ("") ;
+        chpPrenom.setText ("") ;
+        chpSalaire.setText ("") ;
+        chpTxCommission.setText ("") ;
+        lbid.setText ("") ;
+        tablerep.getSelectionModel().clearSelection();
+        
+    }//GEN-LAST:event_bEffacerActionPerformed
 
     /**
      * Mise en page de la fenêtre de gestion de représentants

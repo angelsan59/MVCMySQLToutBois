@@ -14,13 +14,13 @@ public class Representant {
     String actif;
     String nomrep;
     String prenomrep;
-    float salaire;
+    int salaire;
     float txcommission;
 
     public Representant() {
     }
 
-    public Representant(int id_rep, String actif, String nomrep, String prenomrep, float salaire, float txcommission) {
+    public Representant(int id_rep, String actif, String nomrep, String prenomrep, int salaire, float txcommission) {
         this.id_rep = id_rep;
         this.actif = actif;
         this.nomrep = nomrep;
@@ -65,7 +65,7 @@ public class Representant {
         return salaire;
     }
 
-    public void setSalaire(float salaire) {
+    public void setSalaire(int salaire) {
         this.salaire = salaire;
     }
 

@@ -18,29 +18,44 @@ public class TableRepModel {
 
     public static void TableRepModel(javax.swing.table.DefaultTableModel model) {
          model.fireTableDataChanged();
-            Object[] columnsName = new Object[5];
+            Object[] columnsName = new Object[6];
         
         columnsName[0] = "Numéro";
-        columnsName[1] = "Nom";
-        columnsName[2] = "Prénom";
-        columnsName[3] = "Salaire";
-        columnsName[4] = "Taux de commission";
+        columnsName[1] = "Actif";
+        columnsName[2] = "Nom";
+        columnsName[3] = "Prénom";
+        columnsName[4] = "Salaire";
+        columnsName[5] = "Taux de commission";
+         
         
         model.setColumnIdentifiers(columnsName);
       InterrogationBD.getRep();  
       
-        Object[] rowData = new Object[5];
+        Object[] rowData = new Object[6];
         
         for(int i = 0; i < getRep().size(); i++){
             
+            //if (getRep().get(i).getActif()=="oui"){
             rowData[0] = getRep().get(i).getId_rep();
-            rowData[1] = getRep().get(i).getNomrep();
-            rowData[2] = getRep().get(i).getPrenomrep();
-            rowData[3] = getRep().get(i).getSalaire();
-            rowData[4] = getRep().get(i).getTxcommission();
-               
+            rowData[1] = getRep().get(i).getActif();
+            rowData[2] = getRep().get(i).getNomrep();
+            rowData[3] = getRep().get(i).getPrenomrep();
+            rowData[4] = getRep().get(i).getSalaire();
+            rowData[5] = getRep().get(i).getTxcommission();
+             
                model.addRow(rowData);
-        }
+        //}
+            
+           // else{
+            //rowData[0] = getRep().get(i).getId_rep();
+           // rowData[1] = getRep().get(i).getNomrep();
+           // rowData[2] = getRep().get(i).getPrenomrep();
+           // rowData[3] = getRep().get(i).getSalaire();
+           // rowData[4] = getRep().get(i).getTxcommission();
+           // rowData[5] = getRep().get(i).getActif();
+               
+            //   model.addRow(rowData);
+        //}
     }
    
-}
+}}

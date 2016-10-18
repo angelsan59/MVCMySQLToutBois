@@ -27,6 +27,7 @@ public class TableTousModel {
         columnsName[2] = "Prénom";
         columnsName[3] = "Salaire";
         columnsName[4] = "Taux de commission";
+         
         
         model.setColumnIdentifiers(columnsName);
       InterrogationBD.getRep();  
@@ -34,16 +35,18 @@ public class TableTousModel {
         Object[] rowData = new Object[5];
         
         for(int i = 0; i < getRep().size(); i++){
-            
+           
+                System.out.println("test table 2 "+getRep().get(i).getActif());
             rowData[0] = getRep().get(i).getId_rep();
             rowData[1] = getRep().get(i).getNomrep();
             rowData[2] = getRep().get(i).getPrenomrep();
             rowData[3] = getRep().get(i).getSalaire();
             rowData[4] = getRep().get(i).getTxcommission();
-               
+             
                model.addRow(rowData);
-        }
-    }
+}
+   
+}
     
     /**
  * Méthode pour remplir la table des clients et la mettre à jour si besoin
@@ -51,32 +54,47 @@ public class TableTousModel {
  */
     public static void TableCliModel(javax.swing.table.DefaultTableModel model) {
          model.fireTableDataChanged();
-            Object[] columnsName = new Object[8];
+            Object[] columnsName = new Object[15];
         
         columnsName[0] = "Numéro";
         columnsName[1] = "Nom de l'enseigne";
-        columnsName[2] = "dernière visite";
-        columnsName[3] = "Adresse";
-        columnsName[4] = "Code Postal";
-        columnsName[5] = "Ville";
-        columnsName[6] = "Pays";
-        columnsName[7] = "Nb Commandes";
+        columnsName[2]= "Siret";
+        columnsName[3] = "dernière visite";
+        columnsName[4] = "Adresse";
+        columnsName[5] = "Adresse";
+        columnsName[6] = "Code Postal";
+        columnsName[7] = "Ville";
+        columnsName[8] = "Pays";
+        columnsName[9] = "Nom Contact";
+        columnsName[10] = "Prenom Contact";
+        columnsName[11] = "telephone fixe";
+        columnsName[12] = "telephone portable";
+        columnsName[13] = "email";
+        
+        columnsName[14] = "Nb Commandes";
         
         model.setColumnIdentifiers(columnsName);
       InterrogationBD.getCli();  
       
-        Object[] rowData = new Object[8];
+        Object[] rowData = new Object[15];
         
         for(int i = 0; i < getCli().size(); i++){
             
             rowData[0] = getCli().get(i).getIdcli();
             rowData[1] = getCli().get(i).getNomens();
-            rowData[2] = getCli().get(i).getDateder();
-            rowData[3] = getCli().get(i).getAdresse1();
-            rowData[4] = getCli().get(i).getCp();
-            rowData[4] = getCli().get(i).getVille();
-            rowData[4] = getCli().get(i).getPays();
-            rowData[4] = getCli().get(i).getNbcommandes();
+            rowData[2] = getCli().get(i).getSiret();
+            rowData[3] = getCli().get(i).getDateder();
+            rowData[4] = getCli().get(i).getAdresse1();
+            rowData[5] = getCli().get(i).getAdresse2();
+            rowData[6] = getCli().get(i).getCp();
+            rowData[7] = getCli().get(i).getVille();
+            rowData[8] = getCli().get(i).getPays();
+            rowData[9] = getCli().get(i).getNomcont();
+            rowData[10] = getCli().get(i).getPrenomcont();
+            rowData[11] = getCli().get(i).getTelfixe();
+            rowData[12] = getCli().get(i).getTelport();
+            rowData[13] = getCli().get(i).getEmail();
+            rowData[14] = getCli().get(i).getNbcommandes();
                
                model.addRow(rowData);
         }
@@ -110,8 +128,8 @@ public class TableTousModel {
             rowData[2] = getPro().get(i).getDateder();
             rowData[3] = getPro().get(i).getAdresse1();
             rowData[4] = getPro().get(i).getCp();
-            rowData[4] = getPro().get(i).getVille();
-            rowData[4] = getPro().get(i).getPays();
+            rowData[5] = getPro().get(i).getVille();
+            rowData[6] = getPro().get(i).getPays();
                
                model.addRow(rowData);
         }

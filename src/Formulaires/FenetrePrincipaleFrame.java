@@ -1,18 +1,14 @@
 package Formulaires;
 
+import interBD.InterrogationBD;
+import static interBD.InterrogationBD.*;
 import java.awt.Toolkit;
-import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import metier.AppelJavadoc ;
-
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import javax.swing.JOptionPane;
 
 
 /**
@@ -225,11 +221,7 @@ public class FenetrePrincipaleFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_imageArbresActionPerformed
 
     private void mRepresentantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mRepresentantsActionPerformed
-          
-    }//GEN-LAST:event_mRepresentantsActionPerformed
-
-    private void mRepresentantsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mRepresentantsMouseClicked
-        /*
+           /*
         * Ouverture de la fenetre de gestion des représentants via le menu.
         */
         AddRep dlg = null;
@@ -238,7 +230,20 @@ public class FenetrePrincipaleFrame extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(FenetrePrincipaleFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dlg.setVisible(true);
+        dlg.setVisible(true);  
+    }//GEN-LAST:event_mRepresentantsActionPerformed
+
+    private void mRepresentantsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mRepresentantsMouseClicked
+     /*
+        * Ouverture de la fenetre de gestion des représentants via le menu.
+        */
+        AddRep dlg = null;
+        try {
+            dlg = new AddRep(new javax.swing.JFrame(), true);
+        } catch (IOException ex) {
+            Logger.getLogger(FenetrePrincipaleFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dlg.setVisible(true); 
     }//GEN-LAST:event_mRepresentantsMouseClicked
 
     private void mClientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mClientsMouseClicked
@@ -286,56 +291,19 @@ public class FenetrePrincipaleFrame extends javax.swing.JFrame {
 
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        /**
-        * Rafraichissement des nombres de représentants, clients et prospects (Actifs). 
-        * Charge le nombre de représentants , clients et prospects. Et les affiches sur la fenêtre principale.
-        */
-       // try {
-           // int nbderepresentants = 0 ;
-           // int nbdeclients = 0 ;
-          //  int nbdeprospects = 0 ;
-            //
-            // Uilisé si l'on désire faire apparaire les totaux actifs + inactifs.
-            //
-            //int nbderepresentantstotal = 0 ;
-            //int nbdeclientstotal = 0 ;
-            //int nbdeprospectstotal = 0 ;
+ // Récupération du nombre de représentants, clients et prospects
+ 
+InterrogationBD.getRep();
+int  nbderepresentants =getRep().size();           
+jLabel3.setText (nbderepresentants + " Representants");
+          
+InterrogationBD.getCli();
+int nbdeclients =getCli().size(); 
+jLabel5.setText (nbdeclients + " Clients");
        
-            /*
-            * Charge le nombres de représentants, clients et prospects actifs    
-            */
-           // LectureDesActifsDuFichier fichierrepresentant = new LectureDesActifsDuFichier ("Data/Representants.txt") ;
-            //nbderepresentants = fichierrepresentant.getRowCount() ;
-            //LectureDuFichierComplet fichierclients = new LectureDuFichierComplet ("Data/Clients.txt") ;
-           // nbdeclients = fichierclients.getNbdelignes() - 1 ;
-           // LectureDuFichierComplet fichierprospects = new LectureDuFichierComplet ("Data/prospects.txt") ;
-           // nbdeprospects = fichierprospects.getNbdelignes() - 1 ;
-            //
-            // Uilisé si l'on désire faire apparaire les totaux actifs + inactifs.
-            //
-            //LectureDuFichierComplet fichierrepresentanttotal = new LectureDuFichierComplet ("Data/Representants.txt") ;
-            //nbderepresentantstotal = fichierrepresentanttotal.getNbdelignes() - 1 ;
-            //LectureDuFichierComplet fichierclienttotal = new LectureDuFichierComplet ("Data/Clients.txt") ;
-            //nbdeclientstotal = fichierclienttotal.getNbdelignes() - 1 ;
-            //LectureDuFichierComplet fichierprospecttotal = new LectureDuFichierComplet ("Data/Prospects.txt") ;
-            //nbdeprospectstotal = fichierprospecttotal.getNbdelignes() - 1 ;
-
-            
-          //  jLabel3.setText (nbderepresentants + " Representants");
-          //  jLabel5.setText (nbdeclients + " Clients");
-          //  jLabel6.setText (nbdeprospects + " Prospects");
-            //
-            // Uilisé si l'on désire faire apparaire les totaux actifs + inactifs.
-            //
-            //jLabel3.setText (nbderepresentants + "/" + nbderepresentantstotal + " Representants");
-            //jLabel3.setText (nbdeclients + "/" + nbdeclientstotal + " Clients");
-            //jLabel3.setText (nbdeprospects + "/" + nbdeprospectstotal + " Prospects");
-           // jLabel3.setVisible(true);
-           // jLabel5.setVisible(true);
-          //  jLabel6.setVisible(true);
-        //} //catch (FileNotFoundException ex) {
-           // Logger.getLogger(FenetrePrincipaleFrame.class.getName()).log(Level.SEVERE, null, ex);
-     //   }
+InterrogationBD.getPro();
+int nbdeprospects =getPro().size();
+jLabel6.setText (nbdeprospects + " Prospects");
     }//GEN-LAST:event_formWindowActivated
 
     private void mjavadocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mjavadocActionPerformed
