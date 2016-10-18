@@ -103,8 +103,8 @@ public class AjoutBD {
   * @param telport numéro de téléphone portable
   * @param email adresse email
   */
-    public static void addPro(String practif,String nomens, int siret,  String dateder, String adresse1, String adresse2, 
-            int cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
+    public static void addPro(String practif,String nomens, String siret, String dateder, String adresse1, String adresse2, 
+            String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
             String email)
     { 
     ConnectionBD conn = new ConnectionBD("jdbc:mysql://localhost:3306/toutbois", "root", "");
@@ -113,7 +113,7 @@ public class AjoutBD {
             
            try
            {
-              String query = "INSERT INTO prospect (`idcli`, `actif`, `nomens`, `siret`, `dateder`, `adresse1`, "
+              String query = "INSERT INTO prospect (`idpro`, `actif`, `nomens`, `siret`, `dateder`, `adresse1`, "
                       + "`adresse2`, `cp`, `ville`, `pays`, `nomcont`, `prenomcont`, `telfixe`, `telport`, `email`"
                       + ") VALUES (NULL, '"+practif+"', '"+nomens+"', '"+siret+"', '"+dateder+"', '"+adresse1+"', '"+adresse2+"', '"+cp+"',"
                       + " '"+ville+"', '"+pays+"', '"+nomcont+"', '"+prenomcont+"', '"+telfixe+"', '"+telport+"', '"+email+"')";

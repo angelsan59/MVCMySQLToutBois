@@ -106,30 +106,44 @@ public class TableTousModel {
  */
     public static void TableProModel(javax.swing.table.DefaultTableModel model) {
          model.fireTableDataChanged();
-            Object[] columnsName = new Object[7];
+            Object[] columnsName = new Object[14];
         
-        columnsName[0] = "Numéro";
+         columnsName[0] = "Numéro";
         columnsName[1] = "Nom de l'enseigne";
-        columnsName[2] = "dernière visite";
-        columnsName[3] = "Adresse";
-        columnsName[4] = "Code Postal";
-        columnsName[5] = "Ville";
-        columnsName[6] = "Pays";
+        columnsName[2]= "Siret";
+        columnsName[3] = "dernière visite";
+        columnsName[4] = "Adresse";
+        columnsName[5] = "Adresse";
+        columnsName[6] = "Code Postal";
+        columnsName[7] = "Ville";
+        columnsName[8] = "Pays";
+        columnsName[9] = "Nom Contact";
+        columnsName[10] = "Prenom Contact";
+        columnsName[11] = "telephone fixe";
+        columnsName[12] = "telephone portable";
+        columnsName[13] = "email";
         
         model.setColumnIdentifiers(columnsName);
       InterrogationBD.getPro();  
       
-        Object[] rowData = new Object[7];
+        Object[] rowData = new Object[14];
         
         for(int i = 0; i < getPro().size(); i++){
             
             rowData[0] = getPro().get(i).getIdpro();
             rowData[1] = getPro().get(i).getNomens();
-            rowData[2] = getPro().get(i).getDateder();
-            rowData[3] = getPro().get(i).getAdresse1();
-            rowData[4] = getPro().get(i).getCp();
-            rowData[5] = getPro().get(i).getVille();
-            rowData[6] = getPro().get(i).getPays();
+            rowData[2] = getPro().get(i).getSiret();
+            rowData[3] = getPro().get(i).getDateder();
+            rowData[4] = getPro().get(i).getAdresse1();
+            rowData[5] = getPro().get(i).getAdresse2();
+            rowData[6] = getPro().get(i).getCp();
+            rowData[7] = getPro().get(i).getVille();
+            rowData[8] = getPro().get(i).getPays();
+            rowData[9] = getPro().get(i).getNomcont();
+            rowData[10] = getPro().get(i).getPrenomcont();
+            rowData[11] = getPro().get(i).getTelfixe();
+            rowData[12] = getPro().get(i).getTelport();
+            rowData[13] = getPro().get(i).getEmail();
                
                model.addRow(rowData);
         }

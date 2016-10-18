@@ -15,11 +15,11 @@ public class Prospect {
     int idpro;
     String actif;
     String nomens;
-    int siret;
-    Date dateder;
+    String siret;
+    String dateder;
     String adresse1;
     String adresse2;
-    int cp;
+    String cp;
     String ville;
     String pays;
     String nomcont;
@@ -31,8 +31,8 @@ public class Prospect {
     public Prospect() {
     }
 
-    public Prospect(int idpro, String actif, String nomens, int siret, Date dateder, 
-            String adresse1, String adresse2, int cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
+    public Prospect(int idpro, String actif, String nomens, String siret, String dateder, 
+            String adresse1, String adresse2, String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
             String email) {
         this.idpro = idpro;
         this.actif = actif;
@@ -75,19 +75,19 @@ public class Prospect {
         this.nomens = nomens;
     }
 
-    public int getSiret() {
+    public String getSiret() {
         return siret;
     }
 
-    public void setSiret(int siret) {
+    public void setSiret(String siret) {
         this.siret = siret;
     }
 
-    public Date getDateder() {
+    public String getDateder() {
         return dateder;
     }
 
-    public void setDateder(Date dateder) {
+    public void setDateder(String dateder) {
         this.dateder = dateder;
     }
 
@@ -107,11 +107,11 @@ public class Prospect {
         this.adresse2 = adresse2;
     }
 
-    public int getCp() {
+    public String getCp() {
         return cp;
     }
 
-    public void setCp(int cp) {
+    public void setCp(String cp) {
         this.cp = cp;
     }
 

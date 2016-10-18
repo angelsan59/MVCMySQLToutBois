@@ -63,7 +63,7 @@ public class ModificationBD {
                       + " `dateder` = '"+dateder+"', `adresse1` = '"+adresse1+"', `adresse2` = '"+adresse2+"',"
                       + " `cp` = '"+cp+"', `ville` = '"+ville+"', `pays` = '"+pays+"', `nomcont` = '"+nomcont+"',"
                       + " `prenomcont` = '"+prenomcont+"', `telfixe` = '"+telfixe+"', `telport` = '"+telport+"',"
-                      + " `email` = '"+email+"' WHERE `representants`.`idcli` = "+idcli+"";
+                      + " `email` = '"+email+"' WHERE `clients`.`idcli` = "+idcli+"";
           int rs1 = conn.exup(query);
             if (rs1 != 0) {
                 if (clactif=="oui")
@@ -83,6 +83,39 @@ public class ModificationBD {
         }
              conn.close();
     }
+  public static void modPro(String practif,int idpro,String nomens, String siret, String dateder, String adresse1, String adresse2, 
+            String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
+            String email)
+    { 
+    ConnectionBD conn = new ConnectionBD("jdbc:mysql://localhost:3306/toutbois", "root", "");
     
+        if (conn.connect()) {
+            
+           try
+           {
+              String query = "UPDATE `prospects` SET `actif`='"+practif+"', `nomens`='"+nomens+"', `siret` = '"+siret+"',"
+                      + " `dateder` = '"+dateder+"', `adresse1` = '"+adresse1+"', `adresse2` = '"+adresse2+"',"
+                      + " `cp` = '"+cp+"', `ville` = '"+ville+"', `pays` = '"+pays+"', `nomcont` = '"+nomcont+"',"
+                      + " `prenomcont` = '"+prenomcont+"', `telfixe` = '"+telfixe+"', `telport` = '"+telport+"',"
+                      + " `email` = '"+email+"' WHERE `prospects`.`idpro` = "+idpro+"";
+          int rs1 = conn.exup(query);
+            if (rs1 != 0) {
+                if (practif=="oui")
+                {JOptionPane.showMessageDialog(null, "Le prospect a bien été modifié", "Modification de prospect", JOptionPane.INFORMATION_MESSAGE);}
+                 if (practif=="non")
+                {JOptionPane.showMessageDialog(null, "Le prospect a bien été supprimé", "Suppression de prospect", JOptionPane.INFORMATION_MESSAGE);}
+                 else {JOptionPane.showMessageDialog(null, "Probleme de type", "Modification de prospect", JOptionPane.INFORMATION_MESSAGE);}
+            }
+ 
+            } catch (Exception d) 
+                        { 
+                            System.out.println ("Probleme de requete"); 
+                        } 
+        }
+    else {
+            System.out.println("mysql connection failed !!!");
+        }
+             conn.close();
+    }   
     
 }
