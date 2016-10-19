@@ -3,6 +3,8 @@ package Formulaires;
 
 import ControleDeChamps.ChampsDates;
 import Tables.DataFileTableModel;
+import interBD.AjoutBD;
+import interBD.ModificationBD;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -10,7 +12,10 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import metier.AppelJavadoc;
+import metier.NumberCellRenderer;
+import metier.TableTousModel;
 
 /**
  * Ouvre la fenêtre de gestion des prospects. Ajout, Modification, Suppression et consultation de la liste des prospects existants.
@@ -21,7 +26,7 @@ import metier.AppelJavadoc;
 public class AddProspect extends javax.swing.JDialog {
 
     /**
-    * Création de la fenêtre de gestion des prospectss, chargement des données dans le tableau
+    * Création de la fenêtre de gestion des prospects, chargement des données dans le tableau
     *@param parent : fenetrePrincipaleFrame
     * @param modal true ou false
     * @throws java.io.IOException erreur si le fichier parent n'existe pas
@@ -84,8 +89,7 @@ public class AddProspect extends javax.swing.JDialog {
         chpEmail = new javax.swing.JTextField();
         lbEmail = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        DataFileTableModel model;
-        String nomFichier="Data/Prospects.txt";
+        DefaultTableModel model = new DefaultTableModel();
         TableProspects = new javax.swing.JTable();
         bSupprimer = new javax.swing.JButton();
         bModifier = new javax.swing.JButton();
@@ -152,7 +156,8 @@ public class AddProspect extends javax.swing.JDialog {
 
         chpAdresse2.setColumns(20);
         chpAdresse2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        chpAdresse2.setText("complément d'adresse");
+        chpAdresse2.setText("complément adresse");
+        chpAdresse2.setToolTipText("");
 
         chpCodepostal.setColumns(5);
         chpCodepostal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -346,19 +351,18 @@ public class AddProspect extends javax.swing.JDialog {
         jPanel1.add(fondcouleur2);
         fondcouleur2.setBounds(50, 200, 600, 70);
 
-        model = new DataFileTableModel(nomFichier);
+        TableProspects.setDefaultRenderer(Object.class, new NumberCellRenderer());
+        TableTousModel.TableProModel(model);
         TableProspects.setModel(model);
-        TableProspects.createDefaultColumnsFromModel();
-
         // Retirer les colonnes qu'on ne veut pas afficher dans le tableau
         // Le numéro des colonnes se décale à chaque retrait, d'où les nombreux retraits de la colonne 7
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(3));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(5));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(2));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(4));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
         TableProspects.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TableProspectsMouseClicked(evt);
@@ -472,202 +476,222 @@ public class AddProspect extends javax.swing.JDialog {
     }//GEN-LAST:event_mRetourMouseClicked
 
     private void bEffacerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bEffacerMouseClicked
+         // Action sur le bouton Effacer, purge des champs de saisies et suppression de la selection dans la table.
+        chpNomenseigne.setText("");
+        chpSiret.setText("");
+        chpDatevisite.setText("");
+        chpAdresse1.setText("");
+        chpAdresse2.setText("");
+        chpCodepostal.setText("");
+        chpVille.setText("");
+
+        chpNom.setText("");
+        chpPrenom.setText("");
+        chpEmail.setText("");
+        chpTelfixe.setText("");
+        chpTelportable.setText("");
         
-        // Action sur le bouton Effacer, purge des champs de saisies et suppression de la selection dans la table.
-        effacerchampsropects() ;
-        
+        lbid.setText("");
+
+        TableProspects.getSelectionModel().clearSelection();
     }//GEN-LAST:event_bEffacerMouseClicked
 
     private void TableProspectsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProspectsMouseClicked
-      
-        // Je récupére l'identifiant, colonne 1.
-        lbid.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),1));          
+       // Je récupére l'identifiant, colonne 1.
+        String idrepval = String.valueOf(TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 0));
+        lbid.setText(idrepval);
         // Je récupére le nom de l'enseigne, colonne 2.
-        chpNomenseigne.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),2));
+        chpNomenseigne.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 1));
         // Je récupére le numéro de Siret, colonne 3.
-        chpSiret.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),3));
-       // Je récupére la date de la dernière visite, colonne 4.
-         chpDatevisite.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),4));
-         // Je récupére l'adresse, colonne 5.
-        chpAdresse1.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),5));
+        String siretval = String.valueOf(TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 2));
+        chpSiret.setText(siretval);
+        // Je récupére la date de la dernière visite, colonne 4.
+        chpDatevisite.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 3));
+        // Je récupére l'adresse, colonne 5.
+        chpAdresse1.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 4));
         // Je récupére le complément d'adresse, colonne 6.
-        chpAdresse2.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),6));
+        chpAdresse2.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 5));
         // Je récupére le code postal, colonne 7.
-        chpCodepostal.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),7));
+        chpCodepostal.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 6));
         // Je récupére la ville, colonne 8.
-        chpVille.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),8));
+        chpVille.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 7));
         // Je récupére le pays, colonne 9.
-       // comboPays.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),9));
+        // comboPays.setText ((String) TableClients.getModel().getValueAt(TableClients.getSelectedRow(),9));
         // Je récupére le nom de contact, colonne 10.
-        chpNom.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),10));
+        chpNom.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 9));
         // Je récupére le prénom, colonne 11.
-        chpPrenom.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),11));
-         // Je récupére le téléphone fixe, colonne 12.
-        chpTelfixe.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),12));
+        chpPrenom.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 10));
+        // Je récupére le téléphone fixe, colonne 12.
+        String telfixeval = String.valueOf(TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 11));
+        chpTelfixe.setText (telfixeval);
         // Je récupére le téléphone portable, colonne 13.
-        chpTelportable.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),13));
+        String telportval = String.valueOf(TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 12));
+        chpTelportable.setText (telportval);
         // Je récupére l'email, colonne 14.
-        chpEmail.setText ((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(),14));
-             
+        chpEmail.setText((String) TableProspects.getModel().getValueAt(TableProspects.getSelectedRow(), 13));
+      
     }//GEN-LAST:event_TableProspectsMouseClicked
 
     private void bAjouterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bAjouterMouseClicked
         
-        // Je recupere le nombre de ligne (soit le nombre de clients.
-        int nbdeligne = TableProspects.getRowCount() ;
-        //Je récupére les caractéristique du nouveau client.
-        String clnomenseigne = chpNomenseigne.getText() ;
-        String clsiret = chpSiret.getText() ;
-        String clvisite = chpDatevisite.getText() ;
-        String cladresse1 = chpAdresse1.getText() ;
-        String cladresse2 = chpAdresse2.getText() ;
-        String clcodepostal = chpCodepostal.getText() ;
-        String clville = chpVille.getText() ;
-        String clpays = (String) comboPays.getSelectedItem() ;
-        String clnom = chpNom.getText() ;
-        String clprenom = chpPrenom.getText() ;
-        String cltelfixe = chpTelfixe.getText() ;
-        String cltelportable = chpTelportable.getText() ;
-        String clemail = chpEmail.getText() ;
-        String clActif = "Oui" ;
-        String chaine = (clActif + ";" + (nbdeligne+1) + ";" + clnomenseigne + ";" + clsiret + ";" + clvisite + ";" + cladresse1  + ";" + cladresse2
-                + ";" + clcodepostal  + ";" + clville  + ";" + clpays  + ";" + clnom  + ";" + clprenom  + ";" + cltelfixe
-                + ";" + cltelportable  + ";" + clemail  + "\n");
-        
-            
-            
+        String clnomenseigne = chpNomenseigne.getText();
+        String clsiret = chpSiret.getText();
+        String cldateder = chpDatevisite.getText();
+        String cladresse1 = chpAdresse1.getText();
+        String cladresse2 = chpAdresse2.getText();
+        String clcodepostal = chpCodepostal.getText();
+        String clville = chpVille.getText();
+        String clpays = (String) comboPays.getSelectedItem();
+        String clnom = chpNom.getText();
+        String clprenom = chpPrenom.getText();
+        String cltelfixe = chpTelfixe.getText();
+        int cltelfixe1 = Integer.parseInt(cltelfixe);
+        String cltelport = chpTelportable.getText();
+        int cltelport1 = Integer.parseInt(cltelport);
+        String clemail = chpEmail.getText();
+        String clActif = "oui";
 
+        AjoutBD.addPro(clActif, clnomenseigne, clsiret, cldateder, cladresse1, cladresse2,
+                clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1,
+                clemail);
 
-        try {
-            ChampsDates averifier = new ChampsDates () ;
-            boolean datebonne = false ;
-            datebonne = averifier.sidatebonne(clvisite) ;
-            if (datebonne == true) {
-//                EcritureFichier ("Data/Prospects.txt", chaine) ;
-            // pop up de confirmation d'ajout
-            JOptionPane.showMessageDialog(null, "Le prospect a bien été ajouté", "Ajout de prospect", JOptionPane.INFORMATION_MESSAGE);
-                 // Actualisation de la table
-                rafraichissementdelatable () ;
-                // Effacer les données du formulaire
-                effacerchampsropects() ;
-            }
-            else
-            {   
-                JOptionPane.showMessageDialog(null, "ATTENTION : Le prospect n'a pas été ajouté. \nLa date indiquée est érronée.", "Ajout de prospect", JOptionPane.ERROR_MESSAGE);
-                // Actualisation de la table
-                rafraichissementdelatable () ;
-                // Effacer les données du formulaire
-                //effacerchampsropects() ;
-                chpDatevisite.setText ("") ;
-            }
-            } 
-        catch (IOException ex) 
-            {
-            Logger.getLogger(AddRep.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        catch (ParseException ex) 
-            {
-            Logger.getLogger(AddProspect.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        // Actualisation de la table
+        DefaultTableModel model = new DefaultTableModel();
+        TableTousModel.TableProModel(model);
+        TableProspects.setModel(model);
+
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(2));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(4));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+
+        // Effacer les données du formulaire
+        chpNomenseigne.setText("");
+        chpSiret.setText("");
+        chpDatevisite.setText("");
+        chpAdresse1.setText("");
+        chpAdresse2.setText("");
+        chpCodepostal.setText("");
+        chpVille.setText("");
+
+        chpNom.setText("");
+        chpPrenom.setText("");
+        chpEmail.setText("");
+        chpTelfixe.setText("");
+        chpTelportable.setText("");
+        lbid.setText("");
+
     }//GEN-LAST:event_bAjouterMouseClicked
 
     private void bModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bModifierMouseClicked
-        // Je recupere la ligne à modifier
-         //int ligneactuelle = TableClients.getSelectedRow() + 1 ;
-        String clActif = "Oui" ;
-        String clid = lbid.getText() ;
+       String clnomenseigne = chpNomenseigne.getText();
+        String clsiret = chpSiret.getText();
+        String cldateder = chpDatevisite.getText();
+        String cladresse1 = chpAdresse1.getText();
+        String cladresse2 = chpAdresse2.getText();
+        String clcodepostal = chpCodepostal.getText();
+        String clville = chpVille.getText();
+        String clpays = (String) comboPays.getSelectedItem();
+        String clnom = chpNom.getText();
+        String clprenom = chpPrenom.getText();
+        String cltelfixe = chpTelfixe.getText();
+        int cltelfixe1 = Integer.parseInt(cltelfixe);
+        String cltelport = chpTelportable.getText();
+        int cltelport1 = Integer.parseInt(cltelport);
+        String clemail = chpEmail.getText();
+        String clActif = "oui";
+        String clid = lbid.getText();
         int clid1 = Integer.parseInt(clid);
-        String clnomenseigne = chpNomenseigne.getText() ;
-        String clsiret = chpSiret.getText() ;
-        String clvisite = chpDatevisite.getText() ;
-        String cladresse1 = chpAdresse1.getText() ;
-        String cladresse2 = chpAdresse2.getText() ;
-        String clcodepostal = chpCodepostal.getText() ;
-        String clville = chpVille.getText() ;
-        String clpays = (String) comboPays.getSelectedItem() ;
-        String clnom = chpNom.getText() ;
-        String clprenom = chpPrenom.getText() ;
-        String cltelfixe = chpTelfixe.getText() ;
-        String cltelportable = chpTelportable.getText() ;
-        String clemail = chpEmail.getText() ;
-        String chaine = (clActif + ";" + clid + ";" + clnomenseigne + ";" + clsiret + ";" + clvisite + ";" + cladresse1  + ";" + cladresse2
-                + ";" + clcodepostal  + ";" + clville  + ";" + clpays  + ";" + clnom  + ";" + clprenom  + ";" + cltelfixe
-                + ";" + cltelportable  + ";" + clemail  + "\n");
-        
-        // Ecraser la ligne du prospect avec la position active.
-        try {
-            ChampsDates averifier = new ChampsDates () ;
-            boolean datebonne = false ;
-            datebonne = averifier.sidatebonne(clvisite) ;
-            if (datebonne == true) {
-               // ModificationLigne ("Data/Prospects.txt", chaine, clid1) ;
-                // pop up de confirmation de modification
-                JOptionPane.showMessageDialog(null, "Le prospect a été modifié", "Modification de prospect", JOptionPane.INFORMATION_MESSAGE);
-                 // Actualisation de la table
-                rafraichissementdelatable () ;
-                // Effacer les données du formulaire
-                effacerchampsropects() ;
-            }
-            else
-            {   
-                JOptionPane.showMessageDialog(null, "ATTENTION : Le prospect n'a pas été modifié. \nLa date indiquée est érronée.", "Modification de prospect", JOptionPane.ERROR_MESSAGE);
-                // Actualisation de la table
-                rafraichissementdelatable () ;
-                // Effacer les données du formulaire
-                //effacerchampsropects() ;
-                chpDatevisite.setText ("") ;
-            }
-            } 
-        catch (IOException ex) 
-            {
-            Logger.getLogger(AddRep.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        catch (ParseException ex) 
-            {
-            Logger.getLogger(AddProspect.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        ModificationBD.modPro(clActif, clid1, clnomenseigne, clsiret, cldateder, cladresse1, cladresse2,
+                clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1,
+                clemail);
+
+       // Actualisation de la table
+        DefaultTableModel model = new DefaultTableModel();
+        TableTousModel.TableProModel(model);
+        TableProspects.setModel(model);
+
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(2));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(4));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+
+// Effacer les données du formulaire
+        chpNomenseigne.setText("");
+        chpSiret.setText("");
+        chpDatevisite.setText("");
+        chpAdresse1.setText("");
+        chpAdresse2.setText("");
+        chpCodepostal.setText("");
+        chpVille.setText("");
+
+        chpNom.setText("");
+        chpPrenom.setText("");
+        chpEmail.setText("");
+        chpTelfixe.setText("");
+        chpTelportable.setText("");
+        lbid.setText("");
     }//GEN-LAST:event_bModifierMouseClicked
 
     private void bSupprimerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSupprimerMouseClicked
-            // Je recupere la ligne à supprimer
-       //int ligneactuelle = TableClients.getSelectedRow() + 1 ;
-        String clActif = "Non" ;
-        String clid = lbid.getText() ;
+     String clnomenseigne = chpNomenseigne.getText();
+        String clsiret = chpSiret.getText();
+        String cldateder = chpDatevisite.getText();
+        String cladresse1 = chpAdresse1.getText();
+        String cladresse2 = chpAdresse2.getText();
+        String clcodepostal = chpCodepostal.getText();
+        String clville = chpVille.getText();
+        String clpays = (String) comboPays.getSelectedItem();
+        String clnom = chpNom.getText();
+        String clprenom = chpPrenom.getText();
+        String cltelfixe = chpTelfixe.getText();
+        int cltelfixe1 = Integer.parseInt(cltelfixe);
+        String cltelport = chpTelportable.getText();
+        int cltelport1 = Integer.parseInt(cltelport);
+        String clemail = chpEmail.getText();
+        String clActif = "non";
+        String clid = lbid.getText();
         int clid1 = Integer.parseInt(clid);
-        String clnomenseigne = chpNomenseigne.getText() ;
-        String clsiret = chpSiret.getText() ;
-        String clvisite = chpDatevisite.getText() ;
-        String cladresse1 = chpAdresse1.getText() ;
-        String cladresse2 = chpAdresse2.getText() ;
-        String clcodepostal = chpCodepostal.getText() ;
-        String clville = chpVille.getText() ;
-        String clpays = (String) comboPays.getSelectedItem() ;
-        String clnom = chpNom.getText() ;
-        String clprenom = chpPrenom.getText() ;
-        String cltelfixe = chpTelfixe.getText() ;
-        String cltelportable = chpTelportable.getText() ;
-        String clemail = chpEmail.getText() ;
-        
-        String chaine = (clActif + ";" + clid + ";" + clnomenseigne + ";" + clsiret + ";" + clvisite + ";" + cladresse1  + ";" + cladresse2
-                + ";" + clcodepostal  + ";" + clville  + ";" + clpays  + ";" + clnom  + ";" + clprenom  + ";" + cltelfixe
-                + ";" + cltelportable  + ";" + clemail  + "\n");
-        
-        // Ecraser la ligne du prospect avec la position inactive.
-        try {
-//            ModificationLigne ("Data/Prospects.txt", chaine, clid1) ;
-            // pop up de confirmation de modification
-            JOptionPane.showMessageDialog(null, "Le prospect a été spprimé de la liste", "Suppression de prospect", JOptionPane.INFORMATION_MESSAGE);
-            
-            // Actualisation de la table
-            rafraichissementdelatable () ;
-           
-            // Effacer les données du formulaire
-            effacerchampsropects() ;
-            } 
-        catch (IOException ex) 
-            {
-            Logger.getLogger(AddRep.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        ModificationBD.modPro(clActif, clid1, clnomenseigne, clsiret, cldateder, cladresse1, cladresse2,
+                clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1,
+                clemail);
+
+       // Actualisation de la table
+        DefaultTableModel model = new DefaultTableModel();
+        TableTousModel.TableProModel(model);
+        TableProspects.setModel(model);
+
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(2));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(4));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+
+// Effacer les données du formulaire
+        chpNomenseigne.setText("");
+        chpSiret.setText("");
+        chpDatevisite.setText("");
+        chpAdresse1.setText("");
+        chpAdresse2.setText("");
+        chpCodepostal.setText("");
+        chpVille.setText("");
+
+        chpNom.setText("");
+        chpPrenom.setText("");
+        chpEmail.setText("");
+        chpTelfixe.setText("");
+        chpTelportable.setText("");
+        lbid.setText("");
     }//GEN-LAST:event_bSupprimerMouseClicked
 
     private void mjavadocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mjavadocActionPerformed
@@ -700,41 +724,6 @@ public class AddProspect extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-    }
-    
-    /*
-    * Fonction pour effacer tous les champs de saisies.
-    */
-    public void effacerchampsropects () {
-        chpNomenseigne.setText ("") ;
-        chpSiret.setText ("") ;
-        chpDatevisite.setText ("") ;
-        chpAdresse1.setText ("") ;
-        chpAdresse2.setText ("") ;
-        chpCodepostal.setText ("") ;
-        chpVille.setText ("") ;
-        chpNom.setText ("") ;
-        chpPrenom.setText ("") ;
-        chpEmail.setText ("") ;
-        chpTelfixe.setText ("") ;
-        chpTelportable.setText ("") ;
-        lbid.setText ("") ;
-        TableProspects.getSelectionModel().clearSelection();
-    }
-    
-    public void rafraichissementdelatable () throws IOException {
-            DataFileTableModel model1;
-            model1 = new DataFileTableModel("Data/Prospects.txt");
-            model1.fireTableDataChanged();
-            TableProspects.setModel(model1);
-            TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(3));
-            TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(5));
-            TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-            TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-            TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-            TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-            TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(8));
-            TableProspects.getSelectionModel().clearSelection();
     }
     
 

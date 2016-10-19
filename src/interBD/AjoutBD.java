@@ -20,6 +20,7 @@ public class AjoutBD {
      * @param repprenom prenom du representant
      * @param sal salaire
      * @param txc taux de commission
+     * @param repactif état du représentant : actif ou non
      */
     public static void addRep(String repactif,String repnom,String repprenom,int sal,float txc)
     { 
@@ -59,6 +60,7 @@ public class AjoutBD {
   * @param telport numéro de téléphone portable
   * @param email adresse email
   * @param nbcommandes nombre de commandes passées par le client
+  * @param clactif état du client : actif ou non
   */
     public static void addCli(String clactif,String nomens, String siret, String dateder, String adresse1, String adresse2, 
             String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
@@ -102,6 +104,7 @@ public class AjoutBD {
   * @param telfixe numéro de téléphone fixe
   * @param telport numéro de téléphone portable
   * @param email adresse email
+  * @param practif état du prospect : actif ou non
   */
     public static void addPro(String practif,String nomens, String siret, String dateder, String adresse1, String adresse2, 
             String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
@@ -113,9 +116,9 @@ public class AjoutBD {
             
            try
            {
-              String query = "INSERT INTO prospect (`idpro`, `actif`, `nomens`, `siret`, `dateder`, `adresse1`, "
+              String query = "INSERT INTO prospects (`idpro`, `actif`, `nomens`, `siret`, `dateder`, `adresse1`, "
                       + "`adresse2`, `cp`, `ville`, `pays`, `nomcont`, `prenomcont`, `telfixe`, `telport`, `email`"
-                      + ") VALUES (NULL, '"+practif+"', '"+nomens+"', '"+siret+"', '"+dateder+"', '"+adresse1+"', '"+adresse2+"', '"+cp+"',"
+                      + ") VALUES (NULL, '"+practif+"', '"+nomens+"', '"+siret+"', STR_TO_DATE('"+dateder+"','%e/%c/%Y'), '"+adresse1+"', '"+adresse2+"', '"+cp+"',"
                       + " '"+ville+"', '"+pays+"', '"+nomcont+"', '"+prenomcont+"', '"+telfixe+"', '"+telport+"', '"+email+"')";
           int rs1 = conn.exup(query);
             if (rs1 != 0) {

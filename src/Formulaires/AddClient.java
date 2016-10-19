@@ -1,6 +1,5 @@
 package Formulaires;
 
-import Tables.DataFileTableModel;
 import interBD.AjoutBD;
 import interBD.ModificationBD;
 import java.awt.Toolkit;
@@ -594,15 +593,13 @@ public class AddClient extends javax.swing.JDialog {
         String cltelport = chpTelportable.getText();
         int cltelport1 = Integer.parseInt(cltelport);
         String clemail = chpEmail.getText();
-        String clcommandes = "0";
-        int clcommandes1 = Integer.parseInt(clcommandes);
         String clActif = "oui";
         String clid = lbid.getText();
         int clid1 = Integer.parseInt(clid);
 
         ModificationBD.modCli(clActif, clid1, clnomenseigne, clsiret, cldateder, cladresse1, cladresse2,
                 clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1,
-                clemail, clcommandes1);
+                clemail);
 
         // Actualisation de la table
         DefaultTableModel model = new DefaultTableModel();
@@ -652,15 +649,13 @@ public class AddClient extends javax.swing.JDialog {
         String cltelport = chpTelportable.getText();
         int cltelport1 = Integer.parseInt(cltelport);
         String clemail = chpEmail.getText();
-        String clcommandes = "0";
-        int clcommandes1 = Integer.parseInt(clcommandes);
         String clActif = "non";
         String clid = lbid.getText();
         int clid1 = Integer.parseInt(clid);
 
         ModificationBD.modCli(clActif, clid1, clnomenseigne, clsiret, cldateder, cladresse1, cladresse2,
                 clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1,
-                clemail, clcommandes1);
+                clemail);
 
         // Actualisation de la table
         DefaultTableModel model = new DefaultTableModel();

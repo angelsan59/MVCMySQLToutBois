@@ -16,8 +16,9 @@ public class ModificationBD {
      * Méthode d'ajout des représentants
      * @param repnom nom du representant
      * @param repprenom prenom du representant
-     * @param sal salaire
+     * @param sal1 salaire
      * @param txc taux de commission
+     * @param repactif état du représentant : actif ou non
      */
     public static void modRep(String repactif,int idrep,String repnom,String repprenom,float sal1,float txc)
     { 
@@ -49,9 +50,27 @@ public class ModificationBD {
              conn.close();
     }
     
+    /**
+     * Méthode de modification et suppression de client
+     * @param clactif état du client : actif ou non
+     * @param idcli numéro du client
+     * @param nomens nom de l'enseigne
+     * @param siret numéro de SIRET
+     * @param dateder date de dernière visite
+     * @param adresse1 première ligne d'adresse
+     * @param adresse2 complément d'adresse
+     * @param cp code postal
+     * @param ville ville
+     * @param pays pays
+     * @param nomcont nom du contact
+     * @param prenomcont prénom du contact
+     * @param telfixe numéro de téléphone fixe
+     * @param telport numéro de téléphone portable
+     * @param email adresse email
+     */
     public static void modCli(String clactif,int idcli,String nomens, String siret, String dateder, String adresse1, String adresse2, 
             String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
-            String email, int nbcommandes)
+            String email)
     { 
     ConnectionBD conn = new ConnectionBD("jdbc:mysql://localhost:3306/toutbois", "root", "");
     
@@ -83,6 +102,25 @@ public class ModificationBD {
         }
              conn.close();
     }
+    
+     /**
+     * Méthode de modification et suppression de prospects
+     * @param practif état du prospect : actif ou non
+     * @param idpro numéro du prospect
+     * @param nomens nom de l'enseigne
+     * @param siret numéro de SIRET
+     * @param dateder date de dernière visite
+     * @param adresse1 première ligne d'adresse
+     * @param adresse2 complément d'adresse
+     * @param cp code postal
+     * @param ville ville
+     * @param pays pays
+     * @param nomcont nom du contact
+     * @param prenomcont prénom du contact
+     * @param telfixe numéro de téléphone fixe
+     * @param telport numéro de téléphone portable
+     * @param email adresse email
+     */
   public static void modPro(String practif,int idpro,String nomens, String siret, String dateder, String adresse1, String adresse2, 
             String cp, String ville, String pays, String nomcont, String prenomcont, int telfixe, int telport, 
             String email)
