@@ -1,4 +1,0 @@
-/**
- * Essais mysql
- */
-package mysqltest;

@@ -1,21 +1,19 @@
 
 package Formulaires;
 
-import ControleDeChamps.ChampsDates;
-import Tables.DataFileTableModel;
 import interBD.AjoutBD;
 import interBD.ModificationBD;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import metier.AppelJavadoc;
-import metier.NumberCellRenderer;
-import metier.TableTousModel;
+import metier.*;
 
 /**
  * Ouvre la fenêtre de gestion des prospects. Ajout, Modification, Suppression et consultation de la liste des prospects existants.
@@ -611,33 +609,12 @@ public class AddProspect extends javax.swing.JDialog {
                 clemail);
 
        // Actualisation de la table
-        DefaultTableModel model = new DefaultTableModel();
-        TableTousModel.TableProModel(model);
-        TableProspects.setModel(model);
-
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(2));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(4));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
-        TableProspects.removeColumn(TableProspects.getColumnModel().getColumn(7));
+       TableTousModel.rafraichissementdelatable (TableProspects);
 
 // Effacer les données du formulaire
-        chpNomenseigne.setText("");
-        chpSiret.setText("");
-        chpDatevisite.setText("");
-        chpAdresse1.setText("");
-        chpAdresse2.setText("");
-        chpCodepostal.setText("");
-        chpVille.setText("");
-
-        chpNom.setText("");
-        chpPrenom.setText("");
-        chpEmail.setText("");
-        chpTelfixe.setText("");
-        chpTelportable.setText("");
-        lbid.setText("");
+       EffacerChamps.effacerchampsclipro (TableProspects, chpNomenseigne,chpSiret,chpDatevisite,
+               chpAdresse1,chpAdresse2,chpCodepostal,chpVille,chpNom,chpPrenom,chpEmail,chpTelportable,
+             chpTelfixe,lbid,comboPays);
     }//GEN-LAST:event_bModifierMouseClicked
 
     private void bSupprimerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSupprimerMouseClicked

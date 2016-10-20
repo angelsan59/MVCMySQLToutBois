@@ -35,7 +35,7 @@ public class AjoutBD {
                 JOptionPane.showMessageDialog(null, "Le représentant a bien été ajouté", "Ajout de représentant", JOptionPane.INFORMATION_MESSAGE); }
             } catch (Exception d) 
                         { 
-                            System.out.println ("Probleme de requete"); 
+                            System.out.println ("Probleme de requete à insersion representant"); 
                         } 
         }
     else {

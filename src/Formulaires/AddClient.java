@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import metier.AppelJavadoc;
+import metier.EffacerChamps;
 import metier.NumberCellRenderer;
 import metier.TableTousModel;
 
@@ -502,25 +503,9 @@ public class AddClient extends javax.swing.JDialog {
     }//GEN-LAST:event_mRetourMouseClicked
 
     private void bEffacerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bEffacerMouseClicked
-        // Action sur le bouton Effacer, purge des champs de saisies et suppression de la selection dans la table.
-        chpNomenseigne.setText("");
-        chpSiret.setText("");
-        chpDatevisite.setText("");
-        chpAdresse1.setText("");
-        chpAdresse2.setText("");
-        chpCodepostal.setText("");
-        chpVille.setText("");
-
-        chpNom.setText("");
-        chpPrenom.setText("");
-        chpEmail.setText("");
-        chpTelfixe.setText("");
-        chpTelportable.setText("");
-        lbCommandes1.setText("");
-        lbid.setText("");
-
-        TableClients.getSelectionModel().clearSelection();
-
+      EffacerChamps.effacerchampsclipro (TableClients, chpNomenseigne,chpSiret,chpDatevisite,
+               chpAdresse1,chpAdresse2,chpCodepostal,chpVille,chpNom,chpPrenom,chpEmail,chpTelportable,
+             chpTelfixe,lbid,comboPays);
     }//GEN-LAST:event_bEffacerMouseClicked
 
     private void TableClientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableClientsMouseClicked
@@ -601,36 +586,13 @@ public class AddClient extends javax.swing.JDialog {
                 clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1,
                 clemail);
 
-        // Actualisation de la table
-        DefaultTableModel model = new DefaultTableModel();
-        TableTousModel.TableCliModel(model);
-        TableClients.setModel(model);
-
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(2));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(4));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+  // Actualisation de la table
+       TableTousModel.rafraichissementdelatable (TableClients);
 
 // Effacer les données du formulaire
-        chpNomenseigne.setText("");
-        chpSiret.setText("");
-        chpDatevisite.setText("");
-        chpAdresse1.setText("");
-        chpAdresse2.setText("");
-        chpCodepostal.setText("");
-        chpVille.setText("");
-
-        chpNom.setText("");
-        chpPrenom.setText("");
-        chpEmail.setText("");
-        chpTelfixe.setText("");
-        chpTelportable.setText("");
-        lbCommandes1.setText("");
-        lbid.setText("");
-
+       EffacerChamps.effacerchampsclipro (TableClients, chpNomenseigne,chpSiret,chpDatevisite,
+               chpAdresse1,chpAdresse2,chpCodepostal,chpVille,chpNom,chpPrenom,chpEmail,chpTelportable,
+             chpTelfixe,lbid,comboPays);
     }//GEN-LAST:event_bModifierMouseClicked
 
     private void bSupprimerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bSupprimerMouseClicked
@@ -657,39 +619,13 @@ public class AddClient extends javax.swing.JDialog {
                 clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1,
                 clemail);
 
-        // Actualisation de la table
-        DefaultTableModel model = new DefaultTableModel();
-        TableTousModel.TableCliModel(model);
-        TableClients.setModel(model);
-
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(2));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(4));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
+      // Actualisation de la table
+       TableTousModel.rafraichissementdelatable (TableClients);
 
 // Effacer les données du formulaire
-        chpNomenseigne.setText("");
-        chpSiret.setText("");
-        chpDatevisite.setText("");
-        chpAdresse1.setText("");
-        chpAdresse2.setText("");
-        chpCodepostal.setText("");
-        chpVille.setText("");
-
-        chpNom.setText("");
-        chpPrenom.setText("");
-        chpEmail.setText("");
-        chpTelfixe.setText("");
-        chpTelportable.setText("");
-        lbCommandes1.setText("");
-        lbid.setText("");
-
-        //    } catch (IOException ex) {
-        //    Logger.getLogger(AddRep.class.getName()).log(Level.SEVERE, null, ex);
-        //    }
+       EffacerChamps.effacerchampsclipro (TableClients, chpNomenseigne,chpSiret,chpDatevisite,
+               chpAdresse1,chpAdresse2,chpCodepostal,chpVille,chpNom,chpPrenom,chpEmail,chpTelportable,
+             chpTelfixe,lbid,comboPays);
     }//GEN-LAST:event_bSupprimerMouseClicked
 
     private void mjavadocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mjavadocActionPerformed
@@ -725,36 +661,13 @@ public class AddClient extends javax.swing.JDialog {
                 clcodepostal, clville, clpays, clnom, clprenom, cltelfixe1, cltelport1,
                 clemail, clcommandes1);
 
-        // Actualisation de la table
-        DefaultTableModel model = new DefaultTableModel();
-        TableTousModel.TableCliModel(model);
-        TableClients.setModel(model);
+ // Actualisation de la table
+       TableTousModel.rafraichissementdelatable (TableClients);
 
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(2));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(4));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-        TableClients.removeColumn(TableClients.getColumnModel().getColumn(7));
-
-        // Effacer les données du formulaire
-        chpNomenseigne.setText("");
-        chpSiret.setText("");
-        chpDatevisite.setText("");
-        chpAdresse1.setText("");
-        chpAdresse2.setText("");
-        chpCodepostal.setText("");
-        chpVille.setText("");
-
-        chpNom.setText("");
-        chpPrenom.setText("");
-        chpEmail.setText("");
-        chpTelfixe.setText("");
-        chpTelportable.setText("");
-        lbCommandes1.setText("");
-        lbid.setText("");
-
+// Effacer les données du formulaire
+       EffacerChamps.effacerchampsclipro (TableClients, chpNomenseigne,chpSiret,chpDatevisite,
+               chpAdresse1,chpAdresse2,chpCodepostal,chpVille,chpNom,chpPrenom,chpEmail,chpTelportable,
+             chpTelfixe,lbid,comboPays);
     }//GEN-LAST:event_bAjouterActionPerformed
 
     /**

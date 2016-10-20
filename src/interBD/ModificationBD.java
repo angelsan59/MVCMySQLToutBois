@@ -18,6 +18,7 @@ public class ModificationBD {
      * @param repprenom prenom du representant
      * @param sal1 salaire
      * @param txc taux de commission
+     * @param idrep numéro du représentant
      * @param repactif état du représentant : actif ou non
      */
     public static void modRep(String repactif,int idrep,String repnom,String repprenom,float sal1,float txc)
@@ -32,11 +33,12 @@ public class ModificationBD {
                       + " `salaire` = '"+sal1+"', `txcommission` = '"+txc+"' WHERE `representants`.`id_rep` = "+idrep+"";
           int rs1 = conn.exup(query);
             if (rs1 != 0) {
-                if (repactif=="oui")
+                if (repactif.equals("oui"))
                 {JOptionPane.showMessageDialog(null, "Le représentant a bien été modifié", "Modification de représentant", JOptionPane.INFORMATION_MESSAGE);}
-                 if (repactif=="non")
+                else if (repactif.equals("non"))
                 {JOptionPane.showMessageDialog(null, "Le représentant a bien été supprimé", "Suppression de représentant", JOptionPane.INFORMATION_MESSAGE);}
-                 else {JOptionPane.showMessageDialog(null, "Probleme de type", "Modification de représentant", JOptionPane.INFORMATION_MESSAGE);}
+                
+                // else {JOptionPane.showMessageDialog(null, "Probleme de type", "Modification de représentant", JOptionPane.INFORMATION_MESSAGE);}
             }
  
             } catch (Exception d) 

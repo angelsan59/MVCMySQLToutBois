@@ -7,6 +7,8 @@ import interBD.*;
 import static interBD.InterrogationBD.getCli;
 import static interBD.InterrogationBD.getPro;
 import static interBD.InterrogationBD.getRep;
+import java.io.IOException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,6 +16,23 @@ import static interBD.InterrogationBD.getRep;
  */
 public class TableTousModel {
 
+    /**
+     * Méthode qui recharge la table après ajout, modification ou suppression de données dans les formulaires représentants, clients ou prospects
+     * @param nomtable nom de la table à raffraichir, tablerep, TableClients ou TableProspects
+     */
+    public  static void rafraichissementdelatable (javax.swing.JTable nomtable) {
+            DefaultTableModel model = new DefaultTableModel();
+        TableTousModel.TableProModel(model);
+        nomtable.setModel(model);
+
+        nomtable.removeColumn(nomtable.getColumnModel().getColumn(2));
+        nomtable.removeColumn(nomtable.getColumnModel().getColumn(4));
+        nomtable.removeColumn(nomtable.getColumnModel().getColumn(7));
+        nomtable.removeColumn(nomtable.getColumnModel().getColumn(7));
+        nomtable.removeColumn(nomtable.getColumnModel().getColumn(7));
+        nomtable.removeColumn(nomtable.getColumnModel().getColumn(7));
+        nomtable.removeColumn(nomtable.getColumnModel().getColumn(7));
+    }
 /**
  * Méthode pour remplir la table des représentants et la mettre à jour si besoin
  * @param model le modèle utilisé pour la table
