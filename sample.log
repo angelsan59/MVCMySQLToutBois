@@ -1,0 +1,8 @@
+25/10/2016 08:48:55 WARN  Application.Principale - msg d'avertissement
+25/10/2016 08:48:55 ERROR Application.Principale - msg d'erreur
+25/10/2016 08:48:55 FATAL Application.Principale - msg d'erreur fatale
+25/10/2016 08:49:28 DEBUG Application.Principale - msg de debogage
+25/10/2016 08:49:28 INFO  Application.Principale - msg d'information
+25/10/2016 08:49:28 WARN  Application.Principale - msg d'avertissement
+25/10/2016 08:49:28 ERROR Application.Principale - msg d'erreur
+25/10/2016 08:49:28 FATAL Application.Principale - msg d'erreur fatale

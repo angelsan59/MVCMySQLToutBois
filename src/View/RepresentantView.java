@@ -1,5 +1,5 @@
 
-package Formulaires;
+package View;
 
 import metier.NumberCellRenderer;
 import java.awt.Frame;
@@ -21,7 +21,7 @@ import metier.TableTousModel;
  * @author Stephane Coulon
  * @version 1.0
  */
-public class AddRep extends javax.swing.JDialog {
+public class RepresentantView extends javax.swing.JDialog {
 
    /**
     * Création de la fenêtre de gestion des représentants, chargement des données dans le tableau
@@ -30,7 +30,7 @@ public class AddRep extends javax.swing.JDialog {
      * @throws java.io.IOException erreur si le fichier parent n'existe pas
      */
     
-    public AddRep(Frame parent, boolean modal) throws IOException {
+    public RepresentantView(Frame parent, boolean modal) throws IOException {
         super(parent, modal);
         initComponents();
         initialise () ;
@@ -516,24 +516,25 @@ private void initialise(){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddRep.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RepresentantView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddRep.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RepresentantView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddRep.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RepresentantView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddRep.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RepresentantView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddRep dialog = null;
+                RepresentantView dialog = null;
                 try {
-                    dialog = new AddRep(new javax.swing.JFrame(), true);
+                    dialog = new RepresentantView(new javax.swing.JFrame(), true);
                 } catch (IOException ex) {
-                    Logger.getLogger(AddRep.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RepresentantView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override

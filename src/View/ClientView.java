@@ -1,4 +1,4 @@
-package Formulaires;
+package View;
 
 import interBD.AjoutBD;
 import interBD.ModificationBD;
@@ -22,7 +22,7 @@ import metier.TableTousModel;
  * @author Stephane Coulon
  * @version 1.0
  */
-public class AddClient extends javax.swing.JDialog {
+public class ClientView extends javax.swing.JDialog {
 
     /**
      * Création de la fenêtre de gestion des clients, chargement des données
@@ -32,7 +32,7 @@ public class AddClient extends javax.swing.JDialog {
      * @param modal true ou false
      * @throws java.io.IOException erreur si le fichier parent n'existe pas
      */
-    public AddClient(java.awt.Frame parent, boolean modal) throws IOException {
+    public ClientView(java.awt.Frame parent, boolean modal) throws IOException {
         super(parent, modal);
 
         /**
@@ -689,24 +689,25 @@ public class AddClient extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClientView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddClient dialog = null;
+                ClientView dialog = null;
                 try {
-                    dialog = new AddClient(new javax.swing.JFrame(), true);
+                    dialog = new ClientView(new javax.swing.JFrame(), true);
                 } catch (IOException ex) {
-                    Logger.getLogger(AddClient.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientView.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override

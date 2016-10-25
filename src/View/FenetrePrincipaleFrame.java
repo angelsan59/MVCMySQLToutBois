@@ -1,4 +1,4 @@
-package Formulaires;
+package View;
 
 import interBD.InterrogationBD;
 import static interBD.InterrogationBD.*;
@@ -224,9 +224,9 @@ public class FenetrePrincipaleFrame extends javax.swing.JFrame {
            /*
         * Ouverture de la fenetre de gestion des représentants via le menu.
         */
-        AddRep dlg = null;
+        RepresentantView dlg = null;
         try {
-            dlg = new AddRep(new javax.swing.JFrame(), true);
+            dlg = new RepresentantView(new javax.swing.JFrame(), true);
         } catch (IOException ex) {
             Logger.getLogger(FenetrePrincipaleFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -237,9 +237,9 @@ public class FenetrePrincipaleFrame extends javax.swing.JFrame {
      /*
         * Ouverture de la fenetre de gestion des représentants via le menu.
         */
-        AddRep dlg = null;
+        RepresentantView dlg = null;
         try {
-            dlg = new AddRep(new javax.swing.JFrame(), true);
+            dlg = new RepresentantView(new javax.swing.JFrame(), true);
         } catch (IOException ex) {
             Logger.getLogger(FenetrePrincipaleFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -250,9 +250,9 @@ public class FenetrePrincipaleFrame extends javax.swing.JFrame {
         /*
         * Ouverture de la fenetre de gestion des clients via le menu.
         */      
-        AddClient dlg = null;
+        ClientView dlg = null;
         try {
-            dlg = new AddClient(new javax.swing.JFrame(), true);
+            dlg = new ClientView(new javax.swing.JFrame(), true);
         } catch (IOException ex) {
             Logger.getLogger(FenetrePrincipaleFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -263,9 +263,9 @@ public class FenetrePrincipaleFrame extends javax.swing.JFrame {
         /*
         * Ouverture de la fenetre de gestion des prospect via le menu.
         */   
-        AddProspect dlg = null;
+        ProspectView dlg = null;
         try {
-            dlg = new AddProspect(new javax.swing.JFrame(), true);
+            dlg = new ProspectView(new javax.swing.JFrame(), true);
         } catch (IOException ex) {
             Logger.getLogger(FenetrePrincipaleFrame.class.getName()).log(Level.SEVERE, null, ex);
         }

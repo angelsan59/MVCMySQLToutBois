@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Formulaires;
+package View;
 
 import java.awt.Toolkit;
 import java.io.IOException;
